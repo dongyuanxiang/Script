@@ -1,0 +1,5 @@
+# 默认忽略的文件
+/Script.iws
+/Script.iml
+/Script.ipr
+/out/

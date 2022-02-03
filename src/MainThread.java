@@ -13,15 +13,18 @@ public class MainThread implements Runnable{
         System.out.println("WindowLeftUpYCoordinate:"+WindowLeftUpYCoordinate);
         System.out.println("WindowWidth:"+WindowWidth);
         System.out.println("WindowHeight:"+WindowHeight);
+        //两种操作方式 一是通过java自带的robot来模拟操作，二是通过调用dll来模拟
+        //请注意，无论使用哪种方式进行模拟操作，在操作通过管理员身份打开的窗口时都需要用管理员方式打开IDE/jar
+        //一些特殊的程序会屏蔽此类模拟操作（游戏）
         Robot robot = null;
         try {
             robot = new Robot();
         } catch (AWTException e) {
             e.printStackTrace();
         }
-        robot.setAutoDelay(1000);
-        System.loadLibrary("LeftMouseButtonOperation");
-        LeftMouseButtonOperation LeftMouseButton = new LeftMouseButtonOperation();
+        robot.setAutoDelay(200);
+        //System.loadLibrary("LeftMouseButtonOperation");
+        //LeftMouseButtonOperation LeftMouseButton = new LeftMouseButtonOperation();
         FindImage FindImage = new FindImage();
         while (true){
             //输入参数，分别为 查找区域的左上角X坐标 查找区域的左上角Y坐标 查找区域的右下角X坐标 查找区域的右下角Y坐标 目标图片的路径 精确度（0-1） 精确度越高越准确
@@ -31,22 +34,22 @@ public class MainThread implements Runnable{
                     //鼠标移动到图片的位置
                     robot.mouseMove(MainProgram.x + WindowLeftUpXCoordinate,MainProgram.y + WindowLeftUpYCoordinate);
                     //左键双击
-//                    robot.mousePress(InputEvent.BUTTON1_MASK);
-//                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
-//                    robot.mousePress(InputEvent.BUTTON1_MASK);
-//                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
-                    LeftMouseButton.Press();
+                    robot.mousePress(InputEvent.BUTTON1_MASK);
+                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                    robot.mousePress(InputEvent.BUTTON1_MASK);
+                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                    //LeftMouseButton.Press();
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    LeftMouseButton.Release();
+                    //LeftMouseButton.Release();
                     robot.mouseMove(MainProgram.x + WindowLeftUpXCoordinate + 100,MainProgram.y + WindowLeftUpYCoordinate);
                 }
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

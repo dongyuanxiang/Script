@@ -100,6 +100,8 @@ public class FindImage {
                                 if((i/j) > Accuracy) {
                                     MainProgram.x = x;
                                     MainProgram.y = y;
+                                    System.out.println("成功，匹配率为：" + (i/j));
+                                    Count = 0;
                                     return;
                                 }else {
                                     Count = 0;
@@ -111,5 +113,8 @@ public class FindImage {
             }
         }
         System.out.println("失败");
+        MainProgram.x = -1;
+        MainProgram.y = -1;
+        return;
     }
 }

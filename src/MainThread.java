@@ -20,6 +20,8 @@ public class MainThread implements Runnable{
             e.printStackTrace();
         }
         robot.setAutoDelay(1000);
+        System.loadLibrary("LeftMouseButtonOperation");
+        LeftMouseButtonOperation LeftMouseButton = new LeftMouseButtonOperation();
         FindImage FindImage = new FindImage();
         while (true){
             //输入参数，分别为 查找区域的左上角X坐标 查找区域的左上角Y坐标 查找区域的右下角X坐标 查找区域的右下角Y坐标 目标图片的路径 精确度（0-1） 精确度越高越准确
@@ -29,10 +31,17 @@ public class MainThread implements Runnable{
                     //鼠标移动到图片的位置
                     robot.mouseMove(MainProgram.x + WindowLeftUpXCoordinate,MainProgram.y + WindowLeftUpYCoordinate);
                     //左键双击
-                    robot.mousePress(InputEvent.BUTTON1_MASK);
-                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
-                    robot.mousePress(InputEvent.BUTTON1_MASK);
-                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+//                    robot.mousePress(InputEvent.BUTTON1_MASK);
+//                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+//                    robot.mousePress(InputEvent.BUTTON1_MASK);
+//                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                    LeftMouseButton.Press();
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    LeftMouseButton.Release();
                     robot.mouseMove(MainProgram.x + WindowLeftUpXCoordinate + 100,MainProgram.y + WindowLeftUpYCoordinate);
                 }
             }

@@ -79,18 +79,19 @@ public class FindImage {
     public void Find (double Accuracy) {
         for(int y = 0;y < ScreenShotImageHeight-KeyImageHeight;y++) {
             for(int x = 0;x < ScreenShotImageWidth-KeyImageWidth;x++) {
+                //-100000 < RGBData < 100000 的意思是比较两个像素点RGB数据时如果小于这个差值则视为相同
                 //判断左上角
-                if(KeyImageData[0][0]== ScreenShotImageData[y][x]) {
+                if(KeyImageData[0][0] - ScreenShotImageData[y][x] < 1000 && KeyImageData[0][0] - ScreenShotImageData[y][x] > -1000) {
                     //判断右上角
-                    if(KeyImageData[0][KeyImageWidth-1]== ScreenShotImageData[y][x+KeyImageWidth-1]) {
+                    if(KeyImageData[0][KeyImageWidth-1] - ScreenShotImageData[y][x+KeyImageWidth-1] < 1000 && KeyImageData[0][KeyImageWidth-1] - ScreenShotImageData[y][x+KeyImageWidth-1] > -1000) {
                         //判断左下角
-                        if(KeyImageData[KeyImageHeight-1][0]== ScreenShotImageData[y+KeyImageHeight-1][x]) {
+                        if(KeyImageData[KeyImageHeight-1][0] - ScreenShotImageData[y+KeyImageHeight-1][x] < 1000 && KeyImageData[KeyImageHeight-1][0] - ScreenShotImageData[y+KeyImageHeight-1][x] > -1000) {
                             //判断右下角
-                            if(KeyImageData[KeyImageHeight-1][KeyImageWidth-1]== ScreenShotImageData[y+KeyImageHeight-1][x+KeyImageWidth-1]) {
+                            if(KeyImageData[KeyImageHeight-1][KeyImageWidth-1] - ScreenShotImageData[y+KeyImageHeight-1][x+KeyImageWidth-1] < 1000 && KeyImageData[KeyImageHeight-1][KeyImageWidth-1] - ScreenShotImageData[y+KeyImageHeight-1][x+KeyImageWidth-1] > -1000) {
                                 //如果四个角都相同，那么判断每一个像素点
                                 for(int a = 0;a < KeyImageHeight;a++) {
                                     for(int b = 0;b < KeyImageWidth;b++) {
-                                        if(KeyImageData[a][b]== ScreenShotImageData[y+a][x+b]) {
+                                        if(KeyImageData[a][b] - ScreenShotImageData[y+a][x+b] < 1000 && KeyImageData[a][b] - ScreenShotImageData[y+a][x+b] > -1000) {
                                             Count ++;
                                         }
                                     }
@@ -104,6 +105,7 @@ public class FindImage {
                                     Count = 0;
                                     return;
                                 }else {
+                                    System.out.println("失败，匹配率为：" + (i/j));
                                     Count = 0;
                                 }
                             }

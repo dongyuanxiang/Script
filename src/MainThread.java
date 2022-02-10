@@ -3,12 +3,27 @@ import java.awt.event.InputEvent;
 
 public class MainThread implements Runnable{
     public void run() {
+        //提供两种方式来获得窗口数据
+        //通过调用GetWindowData.dll输入窗口的类名和标题来获得窗口数据（不支持特殊字符）
         System.loadLibrary("GetWindowData");
         GetWindowData Window = new GetWindowData();
-        int WindowLeftUpXCoordinate = Window.LeftUpXCoordinate("CabinetWClass","计算机");
-        int WindowLeftUpYCoordinate = Window.LeftUpYCoordinate("CabinetWClass","计算机");
+        int WindowLeftUpXCoordinate = Window.LeftUpXCoordinate("CabinetWClass","此电脑");
+        int WindowLeftUpYCoordinate = Window.LeftUpYCoordinate("CabinetWClass","此电脑");
         int WindowWidth = Window.Width("CabinetWClass","计算机");
         int WindowHeight = Window.Height("CabinetWClass","计算机");
+        //通过调用GetMousePositionWindowData.dll并将鼠标放在窗口上来获得窗口数据
+//        System.loadLibrary("GetMousePositionWindowData");
+//        GetMousePositionWindowData Window = new GetMousePositionWindowData();
+//        //3秒后获得窗口数据
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        int WindowLeftUpXCoordinate = Window.LeftUpXCoordinate();
+//        int WindowLeftUpYCoordinate = Window.LeftUpYCoordinate();
+//        int WindowWidth = Window.Width();
+//        int WindowHeight = Window.Height();
         System.out.println("WindowLeftUpXCoordinate:"+WindowLeftUpXCoordinate);
         System.out.println("WindowLeftUpYCoordinate:"+WindowLeftUpYCoordinate);
         System.out.println("WindowWidth:"+WindowWidth);

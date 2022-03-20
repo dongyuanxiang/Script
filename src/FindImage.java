@@ -102,6 +102,7 @@ public class FindImage {
                                     MainProgram.x = x;
                                     MainProgram.y = y;
                                     System.out.println("成功，匹配率为：" + (i/j));
+                                    MainProgram.jl1.setText("成功找到目标图片");
                                     Count = 0;
                                     return;
                                 }else {

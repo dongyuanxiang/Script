@@ -19,7 +19,9 @@ public class FindImage {
     int [] [] ScreenShotImageData;
     //目标图片的数据
     int [] [] KeyImageData;
-
+    //用于处理目标图片中会影响到结果的背景颜色
+    int BackgroundColorData;
+    int BackgroundColorCount;
     //计数器
     int Count = 0;
 
@@ -27,11 +29,15 @@ public class FindImage {
         ScreenShotImage = this.getScreenShot(LeftUpX,LeftUpY,RightDownX,RightDownY);
         KeyImage = this.getBufferedImageFromPath(KeyImagePath);
         ScreenShotImageData = this.getImageRGB(ScreenShotImage);
-        KeyImageData = this.getImageRGB(KeyImage);
         ScreenShotImageWidth = ScreenShotImage.getWidth();
         ScreenShotImageHeight = ScreenShotImage.getHeight();
+        KeyImageData = this.getImageRGB(KeyImage);
         KeyImageWidth = KeyImage.getWidth();
         KeyImageHeight = KeyImage.getHeight();
+        if(KeyImageData[0][0] == KeyImageData[0][KeyImageWidth-1] && KeyImageData[0][KeyImageWidth-1] == KeyImageData[KeyImageHeight-1][0] && KeyImageData[KeyImageHeight-1][0] == KeyImageData[KeyImageHeight-1][KeyImageWidth-1]){
+            System.out.println("目标图片四角颜色相等，将其判定为背景颜色，防止对结果产生干扰");
+            BackgroundColorData = KeyImageData[0][0];
+        }
         Find(Accuracy);
     }
     public BufferedImage getScreenShot(int LeftUpX,int LeftUpY,int RightDownX,int RightDownY) {
@@ -92,22 +98,30 @@ public class FindImage {
                                 for(int a = 0;a < KeyImageHeight;a++) {
                                     for(int b = 0;b < KeyImageWidth;b++) {
                                         if(KeyImageData[a][b] - ScreenShotImageData[y+a][x+b] < 1000 && KeyImageData[a][b] - ScreenShotImageData[y+a][x+b] > -1000) {
-                                            Count ++;
+                                            //如果对比成功的这一个像素的颜色与背景颜色相同则忽略
+                                            if(KeyImageData[a][b] == BackgroundColorData){
+                                                BackgroundColorCount ++;
+                                            }else{
+                                                Count ++;
+                                            }
                                         }
                                     }
                                 }
                                 double i = Count;
-                                double j = (double)KeyImageHeight*(double)KeyImageWidth;
+                                //在总像素中减去背景颜色所占用的像素
+                                double j = (double)KeyImageHeight*(double)KeyImageWidth - (double)BackgroundColorCount;
                                 if((i/j) > Accuracy) {
                                     MainProgram.x = x;
                                     MainProgram.y = y;
                                     System.out.println("成功，匹配率为：" + (i/j));
                                     MainProgram.jl1.setText("成功找到目标图片");
                                     Count = 0;
+                                    BackgroundColorCount = 0;
                                     return;
                                 }else {
                                     System.out.println("失败，匹配率为：" + (i/j));
                                     Count = 0;
+                                    BackgroundColorCount = 0;
                                 }
                             }
                         }
@@ -118,6 +132,5 @@ public class FindImage {
         System.out.println("失败");
         MainProgram.x = -1;
         MainProgram.y = -1;
-        return;
     }
 }

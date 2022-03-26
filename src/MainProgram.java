@@ -12,7 +12,8 @@ public class MainProgram {
         jf.setSize(500,200);
         jf.setLayout(null);
         jl1.setBounds(0,50,500,15);
-        jl1.setText("点击启动按钮，并在3秒内把鼠标放到目标窗口内");
+        jl1.setFont(new Font("等线",Font.PLAIN,14));
+        jl1.setText("点击启动按钮3秒内把鼠标放到目标窗口");
         jf.add(jl1);
         JButton jb1 = new JButton("启动");
         jb1.setBounds(75,100,100,50);
@@ -32,7 +33,7 @@ public class MainProgram {
             @Override
             public void actionPerformed(ActionEvent e) {
                 stop = true;
-                jl1.setText("已发送停止指令（可能不会立刻停止）");
+                jl1.setText("已发送停止指令（出于安全性考虑，可能不会立刻停止）");
             }
         });
         jf.add(jb2);

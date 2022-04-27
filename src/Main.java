@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-public class MainProgram {
+public class Main {
     static int x = 0;
     static int y = 0;
     static JLabel jl1 = new JLabel("",JLabel.CENTER);
@@ -13,7 +13,7 @@ public class MainProgram {
         jf.setLayout(null);
         jl1.setBounds(0,50,500,15);
         jl1.setFont(new Font("等线",Font.PLAIN,14));
-        jl1.setText("点击启动按钮3秒内把鼠标放到目标窗口");
+        jl1.setText("点击启动按钮后在3秒内把鼠标放到目标窗口");
         jf.add(jl1);
         JButton jb1 = new JButton("启动");
         jb1.setBounds(75,100,100,50);

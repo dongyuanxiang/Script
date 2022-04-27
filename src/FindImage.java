@@ -111,10 +111,10 @@ public class FindImage {
                                 //在总像素中减去背景颜色所占用的像素
                                 double j = (double)KeyImageHeight*(double)KeyImageWidth - (double)BackgroundColorCount;
                                 if((i/j) > Accuracy) {
-                                    MainProgram.x = x;
-                                    MainProgram.y = y;
+                                    Main.x = x;
+                                    Main.y = y;
                                     System.out.println("成功，匹配率为：" + (i/j));
-                                    MainProgram.jl1.setText("成功找到目标图片");
+                                    Main.jl1.setText("成功找到目标图片");
                                     Count = 0;
                                     BackgroundColorCount = 0;
                                     return;
@@ -130,7 +130,7 @@ public class FindImage {
             }
         }
         System.out.println("失败");
-        MainProgram.x = -1;
-        MainProgram.y = -1;
+        Main.x = -1;
+        Main.y = -1;
     }
 }

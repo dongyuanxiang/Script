@@ -114,7 +114,7 @@ public class FindImage {
                                     Main.x = x;
                                     Main.y = y;
                                     System.out.println("成功，匹配率为：" + (i/j));
-                                    Main.jl1.setText("成功找到目标图片");
+                                    Main.tipsJLabel.setText("成功找到目标图片");
                                     Count = 0;
                                     BackgroundColorCount = 0;
                                     return;

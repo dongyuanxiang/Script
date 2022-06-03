@@ -26,24 +26,40 @@ public class MainThread extends Thread{
             //这里因为是在目标窗口的区域中寻找而不是全屏寻找，所以要输入目标窗口相对于屏幕的位置，如果您想再整个屏幕中寻找目标图片，那么请输入您的屏幕的分辨率 例如0,0,1920,1080
             FindImage.findImage(Main.WindowLeftUpXCoordinate,Main.WindowLeftUpYCoordinate,Main.WindowWidth,Main.WindowHeight,"img\\key.png", 0.8);
             if(Main.x>0 && Main.y>0){
-                if(robot!=null){
+                Main.tipsJLabel.setText("正在执行操作：右键单击");
+                //鼠标移动到图片的位置
+                //这里因为是用的程序的数据查早到的结果，所以在用的时候要加上程序相对于屏幕的坐标，如果您是用的全屏寻找，则不用进行这一步
+                robot.mouseMove(Main.x + Main.WindowLeftUpXCoordinate, Main.y + Main.WindowLeftUpYCoordinate);
+                //右键单击
+                robot.mousePress(InputEvent.BUTTON3_MASK);//右键按下
+                robot.mouseRelease(InputEvent.BUTTON3_MASK);//右键松开
+                //操作完成后把x和y重置为-1并休息1000毫秒，防止出现bug
+                try {
+                    Main.x = -1;
+                    Main.y = -1;
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                FindImage.findImage(Main.WindowLeftUpXCoordinate,Main.WindowLeftUpYCoordinate,Main.WindowWidth,Main.WindowHeight,"img\\open.png", 0.8);
+                if(Main.x>0 && Main.y>0){
                     Main.tipsJLabel.setText("正在执行操作：左键单击");
-                    //鼠标移动到图片的位置
-                    //这里因为是用的程序的数据查早到的结果，所以在用的时候要加上程序相对于屏幕的坐标，如果您是用的全屏寻找，则不用进行这一步
                     robot.mouseMove(Main.x + Main.WindowLeftUpXCoordinate, Main.y + Main.WindowLeftUpYCoordinate);
                     //左键单击
                     robot.mousePress(InputEvent.BUTTON1_MASK);//左键按下
                     robot.mouseRelease(InputEvent.BUTTON1_MASK);//左键松开
-                    //操作完成后暂停200毫秒，防止出现bug
+                    //操作完成后把x和y重置为-1并休息200毫秒，防止出现bug
                     try {
+                        Main.x = -1;
+                        Main.y = -1;
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //防止因为鼠标遮挡图片导致的无法识别，所以在操作执行完成之后将鼠标移动到窗口的右下角
-                    Main.tipsJLabel.setText("正在将鼠标移动到窗口的右下角");
-                    robot.mouseMove(Main.WindowLeftUpXCoordinate + Main.WindowWidth,Main.WindowLeftUpYCoordinate + Main.WindowHeight);
                 }
+                //防止因为鼠标遮挡图片导致的无法识别，所以在操作执行完成之后将鼠标移动到窗口的右下角
+                Main.tipsJLabel.setText("正在将鼠标移动到窗口的右下角");
+                robot.mouseMove(Main.WindowLeftUpXCoordinate + Main.WindowWidth,Main.WindowLeftUpYCoordinate + Main.WindowHeight);
             }
             try {
                 if(Main.x > 0 && Main.y > 0){
